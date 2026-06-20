@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLTableConstraints
     {
-        public List<XModel_SQLSchema.SQLTableConstraints> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLTableConstraints> Target { get; private set; }
+        public List<XModelSQL.SQLTableConstraints> Source { get; private set; }
+        public List<XModelSQL.SQLTableConstraints> Target { get; private set; }
 
         // ----------------------------------------------------
 

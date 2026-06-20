@@ -8,12 +8,12 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_UseSupport
 {
     public class SQLTableResult
     {
-        public List<XModel_SQLSchema.SQLTable> ExistTableList { get; private set; }
-        public List<XModel_SQLSchema.SQLTable> NotExistTableList { get; private set; }
+        public List<XModelSQL.SQLTable> ExistTableList { get; private set; }
+        public List<XModelSQL.SQLTable> NotExistTableList { get; private set; }
 
         // -----------------------------------
 
-        public SQLTableResult(List<XModel_SQLSchema.SQLTable> existTableList, List<XModel_SQLSchema.SQLTable> notExistTableList)
+        public SQLTableResult(List<XModelSQL.SQLTable> existTableList, List<XModelSQL.SQLTable> notExistTableList)
         {
             this.ExistTableList = existTableList;
             this.NotExistTableList = notExistTableList;

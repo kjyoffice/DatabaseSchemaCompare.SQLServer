@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLTableForeignKey
     {
-        public List<XModel_SQLSchema.SQLTableForeignKey> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLTableForeignKey> Target { get; private set; }
+        public List<XModelSQL.SQLTableForeignKey> Source { get; private set; }
+        public List<XModelSQL.SQLTableForeignKey> Target { get; private set; }
 
         // ----------------------------------------------------
 

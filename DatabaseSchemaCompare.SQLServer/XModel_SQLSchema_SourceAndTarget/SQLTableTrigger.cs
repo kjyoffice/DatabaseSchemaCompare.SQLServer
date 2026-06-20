@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLTableTrigger
     {
-        public List<XModel_SQLSchema.SQLTableTrigger> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLTableTrigger> Target { get; private set; }
+        public List<XModelSQL.SQLTableTrigger> Source { get; private set; }
+        public List<XModelSQL.SQLTableTrigger> Target { get; private set; }
 
         // ----------------------------------------------------
 

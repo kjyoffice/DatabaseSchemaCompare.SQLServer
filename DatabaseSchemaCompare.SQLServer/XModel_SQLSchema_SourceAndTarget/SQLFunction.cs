@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLFunction
     {
-        public List<XModel_SQLSchema.SQLFunction> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLFunction> Target { get; private set; }
+        public List<XModelSQL.SQLFunction> Source { get; private set; }
+        public List<XModelSQL.SQLFunction> Target { get; private set; }
 
         // ----------------------------------------------------
 

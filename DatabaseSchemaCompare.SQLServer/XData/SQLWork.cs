@@ -277,51 +277,51 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLFunction(x));
         }
 
-        public List<XModel_SQLSchema.SQLTable> TableList()
+        public List<XModelSQL.SQLTable> TableList()
         {
-            return this.TableData.Select(x => new XModel_SQLSchema.SQLTable(x)).ToList();
+            return this.TableData.Select(x => new XModelSQL.SQLTable(x)).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLTableColumn> TableColumnList()
+        public List<XModelSQL.SQLTableColumn> TableColumnList()
         {
-            return this.TableColumnData.Select(x => new XModel_SQLSchema.SQLTableColumn(x)).ToList();
+            return this.TableColumnData.Select(x => new XModelSQL.SQLTableColumn(x)).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLTableIndex> TableIndexList()
+        public List<XModelSQL.SQLTableIndex> TableIndexList()
         {
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
-            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel_SQLSchema.SQLTableIndex(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
+            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModelSQL.SQLTableIndex(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLTableForeignKey> TableForeignKeyList()
+        public List<XModelSQL.SQLTableForeignKey> TableForeignKeyList()
         {
             // 외래키
-            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel_SQLSchema.SQLTableForeignKey(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
+            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModelSQL.SQLTableForeignKey(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLTableConstraints> TableConstraintsList()
+        public List<XModelSQL.SQLTableConstraints> TableConstraintsList()
         {
             // 제약조건 : 체크, 기본값
-            return this.TableConstraintsData.Select(x => new XModel_SQLSchema.SQLTableConstraints(x)).ToList();
+            return this.TableConstraintsData.Select(x => new XModelSQL.SQLTableConstraints(x)).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLTableTrigger> TableTriggerList()
+        public List<XModelSQL.SQLTableTrigger> TableTriggerList()
         {
             // 트리거
             // 긴 트리거 내용인 경우 COLID를 순서대로 n개의 ROW에 스키마가 저장
             // 그로인해 트리거 이름당 1개의 SCHEMA로 만들기 위함
-            return this.TableTriggerData.GroupBy(x => new { x.TABLE_NAME, x.TRIGGER_NAME }).Select(x => new XModel_SQLSchema.SQLTableTrigger(x.Key.TABLE_NAME, x.Key.TRIGGER_NAME, x.ToList())).ToList();
+            return this.TableTriggerData.GroupBy(x => new { x.TABLE_NAME, x.TRIGGER_NAME }).Select(x => new XModelSQL.SQLTableTrigger(x.Key.TABLE_NAME, x.Key.TRIGGER_NAME, x.ToList())).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLProcedure> ProcedureList()
+        public List<XModelSQL.SQLProcedure> ProcedureList()
         {
-            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME).Select(x => new XModel_SQLSchema.SQLProcedure(x.ToList())).ToList();
+            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME).Select(x => new XModelSQL.SQLProcedure(x.ToList())).ToList();
         }
 
-        public List<XModel_SQLSchema.SQLFunction> FunctionList()
+        public List<XModelSQL.SQLFunction> FunctionList()
         {
             // 함수
-            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModel_SQLSchema.SQLFunction(x.ToList())).ToList();
+            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModelSQL.SQLFunction(x.ToList())).ToList();
         }
     }
 }

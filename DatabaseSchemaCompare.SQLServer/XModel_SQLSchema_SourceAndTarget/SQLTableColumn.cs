@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLTableColumn
     {
-        public List<XModel_SQLSchema.SQLTableColumn> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLTableColumn> Target { get; private set; }
+        public List<XModelSQL.SQLTableColumn> Source { get; private set; }
+        public List<XModelSQL.SQLTableColumn> Target { get; private set; }
 
         // ----------------------------------------------------
 

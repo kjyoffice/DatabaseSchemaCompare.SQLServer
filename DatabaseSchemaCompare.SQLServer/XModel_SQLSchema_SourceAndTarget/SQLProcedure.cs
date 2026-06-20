@@ -8,8 +8,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_SourceAndTarget
 {
     public class SQLProcedure
     {
-        public List<XModel_SQLSchema.SQLProcedure> Source { get; private set; }
-        public List<XModel_SQLSchema.SQLProcedure> Target { get; private set; }
+        public List<XModelSQL.SQLProcedure> Source { get; private set; }
+        public List<XModelSQL.SQLProcedure> Target { get; private set; }
 
         // ----------------------------------------------------
 
