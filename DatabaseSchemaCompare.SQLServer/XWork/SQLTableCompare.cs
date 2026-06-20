@@ -317,10 +317,10 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
                 // 존재하지 않는 트리거
                 sb.AppendLine(string.Empty);
                 sb.AppendLine("***** 존재하지 않음");
-                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME)));
+                sb.AppendLine(string.Join(Environment.NewLine, notExistTriggerList.Select(x => x.Source.Original.TRIGGER_NAME)));
 
                 // CREATE TRIGGER 스키마 내보내기
-                existTriggerList.ForEach(
+                notExistTriggerList.ForEach(
                     x =>
                     ExportWork.ExportSchema(
                         pxs,
