@@ -76,7 +76,6 @@ namespace DatabaseSchemaCompare.SQLServer
                 // 결과 보기
                 Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine("저장된 리포트입니다.");
-                Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine(pxs.ReportFilePath);
                 Console.Out.WriteLine(string.Empty);
                 //Process.Start("notepad.exe", pxs.ReportFilePath);
