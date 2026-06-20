@@ -130,7 +130,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                         ELSE N'ASC'
                     END
                 ) AS ORDERBY_TYPE
-                FROM  [SYS].[INDEXES] AS A 
+                FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])
                     AND (A.INDEX_ID = B.INDEX_ID)
@@ -155,7 +155,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 C.[NAME] AS COLUMN_NAME,
                 F.[NAME] AS REFERENCE_TABLE_NAME,
                 E.[NAME] AS REFERENCE_COLUMN_NAME
-                FROM  [SYS].[FOREIGN_KEYS] AS A 
+                FROM [SYS].[FOREIGN_KEYS] AS A 
                 INNER JOIN [SYS].[FOREIGN_KEY_COLUMNS] AS B ON (A.[OBJECT_ID] = B.CONSTRAINT_OBJECT_ID)
                 INNER JOIN [SYS].[COLUMNS] AS C ON (
                     (B.PARENT_OBJECT_ID = C.[OBJECT_ID]) 
