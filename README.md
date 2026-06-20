@@ -1,0 +1,2 @@
+# DatabaseSchemaCompare.SQLServer
+DatabaseSchemaCompare SQLServer
