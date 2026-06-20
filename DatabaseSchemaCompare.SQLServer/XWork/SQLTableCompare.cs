@@ -85,7 +85,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableColumn(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableColumn satstc)
+        private static string TableColumn(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModelSQL_SourceAndTarget.SQLTableColumn satstc)
         {
             // 테이블 이름으로 검색된 컬럼 리스트
             var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
@@ -128,7 +128,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableIndex(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableIndex satsti)
+        private static string TableIndex(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModelSQL_SourceAndTarget.SQLTableIndex satsti)
         {
             // 테이블 이름으로 검색된 인덱스 리스트
             var sourceDataList = satsti.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME));
@@ -182,7 +182,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableForeignKey(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey satstfk)
+        private static string TableForeignKey(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModelSQL_SourceAndTarget.SQLTableForeignKey satstfk)
         {
             // 테이블 이름으로 외래키 리스트 받기 
             var sourceDataList = satstfk.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
@@ -236,7 +236,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableConstraints(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableConstraints satstc)
+        private static string TableConstraints(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModelSQL_SourceAndTarget.SQLTableConstraints satstc)
         {
             // 테이블 이름으로 검색된 제약조건 리스트
             var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
@@ -290,7 +290,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableTrigger(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableTrigger satstt)
+        private static string TableTrigger(XModel.ProcessXSupport pxs, XModelSQL.SQLTable table, XModelSQL_SourceAndTarget.SQLTableTrigger satstt)
         {
             // 테이블 이름으로 검색된 트리거 리스트
             var sourceDataList = satstt.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();

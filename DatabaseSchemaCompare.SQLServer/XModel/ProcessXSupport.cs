@@ -98,44 +98,44 @@ namespace DatabaseSchemaCompare.SQLServer.XModel
             this.TargetSQL.DefaultSetting();
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTable TableList()
+        public XModelSQL_SourceAndTarget.SQLTable TableList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTable(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTable(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTableColumn TableColumnList()
+        public XModelSQL_SourceAndTarget.SQLTableColumn TableColumnList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTableColumn(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTableColumn(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTableIndex TableIndexList()
+        public XModelSQL_SourceAndTarget.SQLTableIndex TableIndexList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTableIndex(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTableIndex(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey TableForeignKeyList()
+        public XModelSQL_SourceAndTarget.SQLTableForeignKey TableForeignKeyList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTableForeignKey(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTableConstraints TableConstraintsList()
+        public XModelSQL_SourceAndTarget.SQLTableConstraints TableConstraintsList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTableConstraints(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTableConstraints(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLTableTrigger TableTriggerList()
+        public XModelSQL_SourceAndTarget.SQLTableTrigger TableTriggerList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLTableTrigger(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLTableTrigger(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLProcedure ProcedureList()
+        public XModelSQL_SourceAndTarget.SQLProcedure ProcedureList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLProcedure(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLProcedure(this.SourceSQL, this.TargetSQL);
         }
 
-        public XModel_SQLSchema_SourceAndTarget.SQLFunction FunctionList()
+        public XModelSQL_SourceAndTarget.SQLFunction FunctionList()
         {
-            return new XModel_SQLSchema_SourceAndTarget.SQLFunction(this.SourceSQL, this.TargetSQL);
+            return new XModelSQL_SourceAndTarget.SQLFunction(this.SourceSQL, this.TargetSQL);
         }
     }
 }
