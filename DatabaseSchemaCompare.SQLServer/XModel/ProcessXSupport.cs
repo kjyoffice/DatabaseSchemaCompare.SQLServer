@@ -137,5 +137,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModel
         {
             return new XModelSQL_SourceAndTarget.SQLFunction(this.SourceSQL, this.TargetSQL);
         }
+
+        public XModelSQL_SourceAndTarget.SQLView ViewList()
+        {
+            return new XModelSQL_SourceAndTarget.SQLView(this.SourceSQL, this.TargetSQL);
+        }
     }
 }

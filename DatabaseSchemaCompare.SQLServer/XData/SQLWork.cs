@@ -21,6 +21,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
         private IEnumerable<XModelSQL_Original.SQLTableTrigger> TableTriggerData { get; set; }
         private IEnumerable<XModelSQL_Original.SQLProcedure> ProcedureData { get; set; }
         private IEnumerable<XModelSQL_Original.SQLFunction> FunctionData { get; set; }
+        private IEnumerable<XModelSQL_Original.SQLView> ViewData { get; set; }
 
         // ---------------------------------
 
@@ -60,6 +61,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             this.TableTriggerData = null;
             this.ProcedureData = null;
             this.FunctionData = null;
+            this.ViewData = null;
         }
 
         public void DefaultSetting()
@@ -292,6 +294,16 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ORDER BY A.[TYPE] ASC,
                 A.[NAME] ASC;
             ";
+            // 뷰
+            var viewList = @"
+                SELECT 
+                A.[NAME] AS VIEW_NAME,
+                B.[DEFINITION] AS VIEW_DEFINITION
+                FROM [SYS].[VIEWS] AS A
+                INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                WHERE (A.IS_MS_SHIPPED = 0)
+                ORDER BY A.[NAME] ASC;
+            ";
             // 쿼리를 1개로 묶고
             var query = string.Join(
                 Environment.NewLine,
@@ -303,7 +315,8 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     tableConstraintsList,
                     tableTriggerList,
                     procedureList,
-                    functionList
+                    functionList,
+                    viewList
                 }
             );
             // 쿼리 실행
@@ -316,6 +329,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLTableTrigger(x));
             this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLProcedure(x));
             this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLFunction(x));
+            this.ViewData = eds.Tables["TABLE18"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLView(x));
         }
 
         public List<XModelSQL.SQLTable> TableList()
@@ -363,6 +377,11 @@ namespace DatabaseSchemaCompare.SQLServer.XData
         {
             // 함수
             return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModelSQL.SQLFunction(x.ToList())).ToList();
+        }
+
+        public List<XModelSQL.SQLView> ViewList()
+        {
+            return this.ViewData.GroupBy(x => x.VIEW_NAME).Select(x => new XModelSQL.SQLView(x.ToList())).ToList();
         }
     }
 }
