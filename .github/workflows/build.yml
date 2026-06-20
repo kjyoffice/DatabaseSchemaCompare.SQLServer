@@ -30,10 +30,10 @@ jobs:
             $versionX = "${dateX}_${{ github.run_number }}"
             echo "APP_VERSION=$versionX" >> $env:GITHUB_ENV 
 
-      - name: Zip Publish Files
-        shell: pwsh
-        run: |
-            Compress-Archive -Path publish/* -DestinationPath "DatabaseSchemaCompare.SQLServer_$env:APP_VERSION.zip"
+    #   - name: Zip Publish Files
+    #     shell: pwsh
+    #     run: |
+    #         Compress-Archive -Path publish/* -DestinationPath "DatabaseSchemaCompare.SQLServer_$env:APP_VERSION.zip"
 
       - name: Upload Build
         uses: actions/upload-artifact@v5
