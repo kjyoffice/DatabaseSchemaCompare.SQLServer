@@ -46,6 +46,7 @@ namespace DatabaseSchemaCompare.SQLServer
                     XWork.SQLTableCompare.ExecuteNow(pxs);
                     XWork.SQLProcedureCompare.ExecuteNow(pxs);
                     XWork.SQLFunctionCompare.ExecuteNow(pxs);
+                    XWork.SQLViewCompare.ExecuteNow(pxs);
 
                     pxs.WriteReportCutBar("END");
 
@@ -97,3 +98,29 @@ namespace DatabaseSchemaCompare.SQLServer
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+// DatabaseSchemaCompare.SQLServer.exe "Server=(local);Database=SchemaCompareTest_Source;User Id=sa;Password=**********;TrustServerCertificate=true;" "Server=(local);Database=SchemaCompareTest_Target;User Id=sa;Password=**********;TrustServerCertificate=true;" "D:\Download\Report"
+
+
+
+
+
+
+
+
+
+
+
+
+
+

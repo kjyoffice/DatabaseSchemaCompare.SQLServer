@@ -21,6 +21,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
         private IEnumerable<XModelSQL_Original.SQLTableTrigger> TableTriggerData { get; set; }
         private IEnumerable<XModelSQL_Original.SQLProcedure> ProcedureData { get; set; }
         private IEnumerable<XModelSQL_Original.SQLFunction> FunctionData { get; set; }
+        private IEnumerable<XModelSQL_Original.SQLView> ViewData { get; set; }
 
         // ---------------------------------
 
@@ -60,6 +61,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             this.TableTriggerData = null;
             this.ProcedureData = null;
             this.FunctionData = null;
+            this.ViewData = null;
         }
 
         public void DefaultSetting()
@@ -130,7 +132,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                         ELSE N'ASC'
                     END
                 ) AS ORDERBY_TYPE
-                FROM  [SYS].[INDEXES] AS A 
+                FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])
                     AND (A.INDEX_ID = B.INDEX_ID)
@@ -155,7 +157,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 C.[NAME] AS COLUMN_NAME,
                 F.[NAME] AS REFERENCE_TABLE_NAME,
                 E.[NAME] AS REFERENCE_COLUMN_NAME
-                FROM  [SYS].[FOREIGN_KEYS] AS A 
+                FROM [SYS].[FOREIGN_KEYS] AS A 
                 INNER JOIN [SYS].[FOREIGN_KEY_COLUMNS] AS B ON (A.[OBJECT_ID] = B.CONSTRAINT_OBJECT_ID)
                 INNER JOIN [SYS].[COLUMNS] AS C ON (
                     (B.PARENT_OBJECT_ID = C.[OBJECT_ID]) 
@@ -209,6 +211,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ORDER BY A.TABLE_NAME ASC,
                 A.CONSTRAINT_NAME ASC;
             ";
+            /*
             // 트리거
             var tableTriggerList = @"
                 SELECT 
@@ -251,6 +254,56 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 A.[NAME] ASC,
                 B.COLID ASC;
             ";
+            */
+            // 트리거
+            var tableTriggerList = @"
+                SELECT 
+                B.[NAME] AS TABLE_NAME,
+                A.[NAME] AS TRIGGER_NAME,
+                C.[DEFINITION] AS TRIGGER_SCHEMA
+                FROM [SYS].[TRIGGERS] AS A
+                INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_ID = B.[OBJECT_ID])
+                INNER JOIN [SYS].[SQL_MODULES] AS C ON (A.[OBJECT_ID] = C.[OBJECT_ID])
+                WHERE (A.IS_MS_SHIPPED = 0)
+                AND (B.IS_MS_SHIPPED = 0)
+                ORDER BY B.[NAME] ASC,
+                A.[NAME] ASC;
+            ";
+            // 프로시저
+            var procedureList = @"
+                SELECT 
+                A.[NAME] AS ROUTINE_NAME,
+                B.[DEFINITION] AS ROUTINE_DEFINITION
+                FROM [SYS].[PROCEDURES] AS A
+                INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                WHERE (A.IS_MS_SHIPPED = 0)
+                ORDER BY A.[NAME] ASC;
+            ";
+            // 함수
+            var functionList = @"
+                -- FN / SQL_SCALAR_FUNCTION
+                -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
+                -- TF / SQL_TABLE_VALUED_FUNCTION
+                SELECT 
+                A.[NAME] AS FUNCTION_NAME,
+                B.[DEFINITION] AS FUNCTION_DEFINITION
+                FROM [SYS].[OBJECTS] AS A
+                INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                WHERE (A.[TYPE] IN (N'FN', N'IF', N'TF'))
+                AND (A.IS_MS_SHIPPED = 0)
+                ORDER BY A.[TYPE] ASC,
+                A.[NAME] ASC;
+            ";
+            // 뷰
+            var viewList = @"
+                SELECT 
+                A.[NAME] AS VIEW_NAME,
+                B.[DEFINITION] AS VIEW_DEFINITION
+                FROM [SYS].[VIEWS] AS A
+                INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                WHERE (A.IS_MS_SHIPPED = 0)
+                ORDER BY A.[NAME] ASC;
+            ";
             // 쿼리를 1개로 묶고
             var query = string.Join(
                 Environment.NewLine,
@@ -262,7 +315,8 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     tableConstraintsList,
                     tableTriggerList,
                     procedureList,
-                    functionList
+                    functionList,
+                    viewList
                 }
             );
             // 쿼리 실행
@@ -275,6 +329,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLTableTrigger(x));
             this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLProcedure(x));
             this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLFunction(x));
+            this.ViewData = eds.Tables["TABLE18"].Rows.Cast<DataRow>().Select(x => new XModelSQL_Original.SQLView(x));
         }
 
         public List<XModelSQL.SQLTable> TableList()
@@ -322,6 +377,11 @@ namespace DatabaseSchemaCompare.SQLServer.XData
         {
             // 함수
             return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModelSQL.SQLFunction(x.ToList())).ToList();
+        }
+
+        public List<XModelSQL.SQLView> ViewList()
+        {
+            return this.ViewData.GroupBy(x => x.VIEW_NAME).Select(x => new XModelSQL.SQLView(x.ToList())).ToList();
         }
     }
 }
