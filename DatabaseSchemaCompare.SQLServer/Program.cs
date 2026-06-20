@@ -17,9 +17,10 @@ namespace DatabaseSchemaCompare.SQLServer
             //  - SourceServer에 Schema가 없고 TargetServer에 Schema가 있음 -> Skip
             var axs = new XModel.ArgumentsXSupport(args);
 
+            Console.Out.WriteLine(string.Empty);
             Console.Out.WriteLine("<<< DatabaseSchemaCompare.SQLServer >>>");
 
-            if (axs.IsExistServerConnectionString == true)
+            if (axs.IsAllow == true)
             {
                 var pxs = new XModel.ProcessXSupport(axs);
 
@@ -47,11 +48,11 @@ namespace DatabaseSchemaCompare.SQLServer
 
                     pxs.WriteReportCutBar("END");
 
-                    // 아웃풋 되는 스키마가 없으면 아예 폴더가 만들어지지 않는다
+                    // 아웃풋 되는 스키마가 없으면 아예 디렉토리가 만들어지지 않는다
                     if (Directory.Exists(pxs.SchemaDirectory) == true)
                     {
                         pxs.WriteReport(string.Empty);
-                        pxs.WriteReport("*** 아래 폴더에 스키마 파일이 있으니 확인 해주세요.");
+                        pxs.WriteReport("*** 아래 디렉토리에 스키마 파일이 있습니다.");
                         pxs.WriteReport(pxs.SchemaDirectory);
                         pxs.WriteReport(string.Empty);
                         pxs.WriteReport("*** 변경된 스키마의 비교를 위해 ALTER 디렉토리에 Diff 이름을 가지는 배치파일이 있습니다.");
@@ -59,6 +60,7 @@ namespace DatabaseSchemaCompare.SQLServer
                         pxs.WriteReport("    혹시 VisualStudio Code가 설치되어 있지 않다면 아래의 URL을 통해 설치 파일을 다운로드 할 수 있습니다.");
                         pxs.WriteReport(string.Empty);
                         pxs.WriteReport("    https://code.visualstudio.com/");
+                        pxs.WriteReport(string.Empty);
                     }
                 }
                 catch (Exception ex)
@@ -71,19 +73,26 @@ namespace DatabaseSchemaCompare.SQLServer
                 }
 
                 // 결과 보기
-                Process.Start("notepad.exe", pxs.ReportFilePath);
+                Console.Out.WriteLine(string.Empty);
+                Console.Out.WriteLine("저장된 리포트입니다.");
+                Console.Out.WriteLine(string.Empty);
+                Console.Out.WriteLine(pxs.ReportFilePath);
+                Console.Out.WriteLine(string.Empty);
+                //Process.Start("notepad.exe", pxs.ReportFilePath);
             }
             else
             {
+                Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine("실행 명령이 없습니다.");
                 Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine("> DatabaseSchemaCompare.SQLServer.exe [SourceServer] [TargetServer] {ReportDirectoryPath}");
                 Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine("- SourceServer : 소스서버 연결 문자열 (필수)");
                 Console.Out.WriteLine("- TargetServer : 타겟서버 연결 문자열 (필수)");
-                Console.Out.WriteLine("- ReportDirectoryPath : 비교 결과를 저정하는 디렉토리 경로");
+                Console.Out.WriteLine("- ReportDirectoryPath : 비교 결과를 저정하는 디렉토리 경로 (빈값이면 현재 디렉토리)");
                 Console.Out.WriteLine(string.Empty);
                 Console.Out.WriteLine("\"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념입니다.");
+                Console.Out.WriteLine(string.Empty);
             }
         }
     }

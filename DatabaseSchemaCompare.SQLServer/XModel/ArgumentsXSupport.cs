@@ -11,7 +11,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel
         public string SourceServerConnectionString { get; private set; }
         public string TargetServerConnectionString { get; private set; }
         public string ReportDirectoryPathSource { get; private set; }
-        public bool IsExistServerConnectionString { get; private set; }
+        public bool IsAllow { get; private set; }
 
         // -------------------------------------------------------
 
@@ -27,7 +27,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel
             this.SourceServerConnectionString = sourceServerConnectionString;
             this.TargetServerConnectionString = targetServerConnectionString;
             this.ReportDirectoryPathSource = argsUse[2];
-            this.IsExistServerConnectionString = ((sourceServerConnectionString != string.Empty) && (targetServerConnectionString != string.Empty));
+            this.IsAllow = ((sourceServerConnectionString != string.Empty) && (targetServerConnectionString != string.Empty));
         }
     }
 }
