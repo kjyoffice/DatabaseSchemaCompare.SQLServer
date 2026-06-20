@@ -21,7 +21,7 @@ jobs:
         run: dotnet restore
 
       - name: Publish
-        run: dotnet publish -c Release --no-restore -o publish
+        run: dotnet publish ./DatabaseSchemaCompare.SQLServer/DatabaseSchemaCompare.SQLServer.csproj -c Release --no-restore -o publish
 
       - name: Set Version
         shell: pwsh
