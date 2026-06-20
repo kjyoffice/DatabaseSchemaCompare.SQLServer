@@ -25,6 +25,7 @@ namespace DatabaseSchemaCompare.SQLServer
             {
                 var pxs = new XModel.ProcessXSupport(axs);
 
+                Console.Out.WriteLine("데이터베이스 스키마를 비교합니다.");
                 Console.Out.WriteLine("잠시만 기다려주세요...");
 
                 try
