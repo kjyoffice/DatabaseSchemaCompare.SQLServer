@@ -9,7 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 {
     public class SQLProcedure
     {
-        public XModel_SQLSchema_UseOriginal.SQLProcedure Original { get; private set; }
+        public XModelSQL_UseOriginal.SQLProcedure Original { get; private set; }
         public string ROUTINE_NAME { get; private set; }
         public string ROUTINE_DEFINITION { get; private set; }
         public string CheckSource { get; private set; }
@@ -18,7 +18,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 
         public SQLProcedure(List<XModelSQL_Original.SQLProcedure> spList)
         {
-            var original = new XModel_SQLSchema_UseOriginal.SQLProcedure(spList);
+            var original = new XModelSQL_UseOriginal.SQLProcedure(spList);
             var routine_Definition = original.ROUTINE_DEFINITION.ToUpper();
 
             this.Original = original;
