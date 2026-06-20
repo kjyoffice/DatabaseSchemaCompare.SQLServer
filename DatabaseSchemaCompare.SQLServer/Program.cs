@@ -41,9 +41,9 @@ namespace DatabaseSchemaCompare.SQLServer
 
                     pxs.DefaultSetting();
 
-                    XWork.TableCompare.ExecuteNow(pxs);
-                    XWork.ProcedureCompare.ExecuteNow(pxs);
-                    XWork.FunctionCompare.ExecuteNow(pxs);
+                    XWork.SQLTableCompare.ExecuteNow(pxs);
+                    XWork.SQLProcedureCompare.ExecuteNow(pxs);
+                    XWork.SQLFunctionCompare.ExecuteNow(pxs);
 
                     pxs.WriteReportCutBar("END");
 

@@ -8,7 +8,7 @@ using System.IO;
 
 namespace DatabaseSchemaCompare.SQLServer.XWork
 {
-    public class ProcedureCompare
+    public class SQLProcedureCompare
     {
         public static void ExecuteNow(XModel.ProcessXSupport pxs)
         {

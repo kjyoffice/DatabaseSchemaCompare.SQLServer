@@ -8,12 +8,12 @@ using System.IO;
 
 namespace DatabaseSchemaCompare.SQLServer.XWork
 {
-    public class TableCompare
+    public class SQLTableCompare
     {
         public static void ExecuteNow(XModel.ProcessXSupport pxs)
         {
             // 테이블 리스트 비교 결과
-            var tableResult = TableCompare.Table(pxs);
+            var tableResult = SQLTableCompare.Table(pxs);
             // 컬럼 리스트
             var allColumnList = pxs.TableColumnList();
             // 인덱스 리스트
@@ -37,11 +37,11 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
             foreach (var table in tableResult.ExistTableList)
             {
                 var compareResult = new Dictionary<string, string>() {
-                    { "컬럼 (COLUMN)", TableCompare.TableColumn(pxs, table, allColumnList) },
-                    { "인덱스 (PRIMARY KEY / INDEX / UNIQUE)", TableCompare.TableIndex(pxs, table, allIndexList) },
-                    { "외래키 (FOREIGN KEY)", TableCompare.TableForeignKey(pxs, table, allForeignKeyList) },
-                    { "제약조건 (CHECK, DEFAULT)", TableCompare.TableConstraints(pxs, table, allConstraintList) },
-                    { "트리거 (TRIGGER)", TableCompare.TableTrigger(pxs, table, allTriggerList) }
+                    { "컬럼 (COLUMN)", SQLTableCompare.TableColumn(pxs, table, allColumnList) },
+                    { "인덱스 (PRIMARY KEY / INDEX / UNIQUE)", SQLTableCompare.TableIndex(pxs, table, allIndexList) },
+                    { "외래키 (FOREIGN KEY)", SQLTableCompare.TableForeignKey(pxs, table, allForeignKeyList) },
+                    { "제약조건 (CHECK, DEFAULT)", SQLTableCompare.TableConstraints(pxs, table, allConstraintList) },
+                    { "트리거 (TRIGGER)", SQLTableCompare.TableTrigger(pxs, table, allTriggerList) }
                 }.Where(x => (x.Value != string.Empty));
 
                 // 차이가 있는 테이블만 뿌린다
