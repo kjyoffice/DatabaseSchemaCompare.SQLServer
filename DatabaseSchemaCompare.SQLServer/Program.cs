@@ -31,12 +31,12 @@ namespace DatabaseSchemaCompare.SQLServer
                 {
                     pxs.StartSupport();
 
+                    pxs.WriteReport("<<< DatabaseSchemaCompare.SQLServer - Report >>>");
                     pxs.WriteReport(string.Empty);
                     pxs.WriteReport($"> 소스서버 : {pxs.SourceServerInfo}");
                     pxs.WriteReport($"> 타겟서버 : {pxs.TargetServerInfo}");
                     pxs.WriteReport(string.Empty);
                     pxs.WriteReport($"*** \"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념으로 이해하면 됩니다.");
-                    pxs.WriteReport(string.Empty);
 
                     pxs.WriteReportCutBar("START");
 
