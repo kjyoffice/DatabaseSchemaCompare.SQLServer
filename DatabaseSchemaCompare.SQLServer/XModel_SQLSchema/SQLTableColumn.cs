@@ -140,7 +140,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.IS_IDENTITY = is_Identity;
             this.SEED_VALUE = original.SEED_VALUE;
             this.INCREMENT_VALUE = original.INCREMENT_VALUE;
-            this.CheckSource = XValue.HashValue.SHA512Hash(is_Nullable, data_Type, original.MAX_LENGTH, original.PRECISION, original.SCALE, is_Identity, original.SEED_VALUE, original.INCREMENT_VALUE);
+            this.CheckSource = XValue.ProcessValue.SHA512Hash(is_Nullable, data_Type, original.MAX_LENGTH, original.PRECISION, original.SCALE, is_Identity, original.SEED_VALUE, original.INCREMENT_VALUE);
             this.CreateColumnSchema(original, data_Type, is_Nullable, is_Identity);
         }
     }

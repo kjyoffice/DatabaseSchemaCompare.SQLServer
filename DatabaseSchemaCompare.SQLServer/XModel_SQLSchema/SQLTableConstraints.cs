@@ -29,7 +29,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.CONSTRAINT_NAME = original.CONSTRAINT_NAME.ToUpper();
             this.TYPE_DESC = type_Desc;
             this.CONSTRAINT_DEFINITION = constraint_Definition;
-            this.CheckSourceHash = XValue.HashValue.SHA512Hash(type_Desc, constraint_Definition);
+            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(type_Desc, constraint_Definition);
             this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.TYPE_DESC} / {original.CONSTRAINT_DEFINITION}";
         }
     }

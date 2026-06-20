@@ -24,7 +24,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.Original = original;
             this.ROUTINE_NAME = original.ROUTINE_NAME.ToUpper();
             this.ROUTINE_DEFINITION = routine_Definition;
-            this.CheckSource = XValue.HashValue.SHA512Hash(routine_Definition);
+            this.CheckSource = XValue.ProcessValue.SHA512Hash(routine_Definition);
         }
     }
 }

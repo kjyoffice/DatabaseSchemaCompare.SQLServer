@@ -24,7 +24,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.Original = original;
             this.FUNCTION_NAME = original.FUNCTION_NAME.ToUpper();
             this.FUNCTION_DEFINITION = function_Definition;
-            this.CheckSource = XValue.HashValue.SHA512Hash(function_Definition);
+            this.CheckSource = XValue.ProcessValue.SHA512Hash(function_Definition);
         }
     }
 }

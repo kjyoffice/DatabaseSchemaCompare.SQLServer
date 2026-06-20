@@ -33,7 +33,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.COLUMN_NAME = column_Name;
             this.REFERENCE_TABLE_NAME = reference_Table_Name;
             this.REFERENCE_COLUMN_NAME = reference_Column_Name;     
-            this.CheckSourceHash = XValue.HashValue.SHA512Hash(column_Name, reference_Table_Name, reference_Column_Name);
+            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(column_Name, reference_Table_Name, reference_Column_Name);
             this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.COLUMN_NAME} / {original.REFERENCE_TABLE_NAME} / {original.REFERENCE_COLUMN_NAME}";
         }
     }

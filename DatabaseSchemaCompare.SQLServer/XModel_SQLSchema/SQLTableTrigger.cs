@@ -26,7 +26,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema
             this.TABLE_NAME = original.TABLE_NAME.ToUpper();
             this.TRIGGER_NAME = original.TRIGGER_NAME.ToUpper();
             this.TRIGGER_SCHEMA = trigger_Schema;
-            this.CheckSource = XValue.HashValue.SHA512Hash(trigger_Schema);
+            this.CheckSource = XValue.ProcessValue.SHA512Hash(trigger_Schema);
         }
     }
 }
