@@ -19,6 +19,7 @@ namespace DatabaseSchemaCompare.SQLServer
 
             Console.Out.WriteLine(string.Empty);
             Console.Out.WriteLine("<<< DatabaseSchemaCompare.SQLServer >>>");
+            Console.Out.WriteLine(string.Empty);
 
             if (axs.IsAllow == true)
             {
@@ -30,7 +31,6 @@ namespace DatabaseSchemaCompare.SQLServer
                 {
                     pxs.StartSupport();
 
-                    pxs.WriteReport($"> 리포트 디렉토리 : {pxs.ReportDirectoryPath}");
                     pxs.WriteReport(string.Empty);
                     pxs.WriteReport($"> 소스서버 : {pxs.SourceServerInfo}");
                     pxs.WriteReport($"> 타겟서버 : {pxs.TargetServerInfo}");
