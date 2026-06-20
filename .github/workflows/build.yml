@@ -36,4 +36,11 @@ jobs:
           name: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}
           path: publish
 
-
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.APP_VERSION }}
+          name: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}
+          files: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
