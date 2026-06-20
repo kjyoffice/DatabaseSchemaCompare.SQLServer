@@ -41,11 +41,6 @@ namespace DatabaseSchemaCompare.SQLServer.XValue
             return result;
         }
 
-        public static string CreateDirectoryPath(string baseDirPath, string subDirName)
-        {
-            return ProcessValue.CreateDirectoryPath(baseDirPath, new List<string>() { subDirName });
-        }
-
         public static string SHA512Hash(params object[] source)
         {
             var result = string.Empty;

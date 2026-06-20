@@ -27,7 +27,7 @@ namespace DatabaseSchemaCompare.SQLServer.XWork
                 // 타겟서버의 스키마
                 // ** 타겟서버의 스키마는 적용하지 않고 단순 참조로만 사용 할 것이므로 
                 //    따로 폴더를 만들어서 저장, 헷갈리지 않도록 최소화 하는 것을 의도함
-                var targetDirectoryPath = XValue.ProcessValue.CreateDirectoryPath(directoryPath, "_TargetReference");
+                var targetDirectoryPath = XValue.ProcessValue.CreateDirectoryPath(directoryPath, new List<string>() { "_TargetReference" });
                 var targetFilePath = Path.Combine(targetDirectoryPath, (fileName + " - DO_NOT_EXECUTE.sql"));
 
                 // 타겟 파일의 실행하지 말라는 경고추가
