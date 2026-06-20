@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -30,17 +33,25 @@ jobs:
             $versionX = "${dateX}_${{ github.run_number }}"
             echo "APP_VERSION=$versionX" >> $env:GITHUB_ENV 
 
-      - name: Upload Build
-        uses: actions/upload-artifact@v5
-        with:
-          name: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}
-          path: publish
+      - name: Zip Publish Files
+        shell: pwsh
+        run: |
+          Compress-Archive -Path publish/* -DestinationPath "DatabaseSchemaCompare.SQLServer_${env:APP_VERSION}.zip"
+
+    #   - name: Upload Build
+    #     uses: actions/upload-artifact@v5
+    #     with:
+    #       name: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}
+    #       path: publish
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.APP_VERSION }}
           name: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}
           files: DatabaseSchemaCompare.SQLServer_${{ env.APP_VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+          
