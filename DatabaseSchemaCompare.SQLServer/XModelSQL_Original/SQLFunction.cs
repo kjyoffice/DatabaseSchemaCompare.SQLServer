@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_Original
+namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLFunction
     {

@@ -14,7 +14,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLFunction(List<XModel_SQLSchema_Original.SQLFunction> sfList)
+        public SQLFunction(List<XModelSQL_Original.SQLFunction> sfList)
         {
             var sf1 = sfList[0];
 

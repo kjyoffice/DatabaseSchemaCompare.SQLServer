@@ -9,12 +9,12 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 {
     public class SQLTable
     {
-        public XModel_SQLSchema_Original.SQLTable Original { get; private set; }
+        public XModelSQL_Original.SQLTable Original { get; private set; }
         public string TABLE_NAME { get; private set; }
 
         // ---------------------------------------------------
 
-        public SQLTable(XModel_SQLSchema_Original.SQLTable original)
+        public SQLTable(XModelSQL_Original.SQLTable original)
         {
             this.Original = original;
             this.TABLE_NAME = original.TABLE_NAME.ToUpper();

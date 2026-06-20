@@ -20,7 +20,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 
         // -----------------------------------------------------
 
-        public SQLTableForeignKey(string table_Name, string constraint_Name, List<XModel_SQLSchema_Original.SQLTableForeignKey> stfkList)
+        public SQLTableForeignKey(string table_Name, string constraint_Name, List<XModelSQL_Original.SQLTableForeignKey> stfkList)
         {
             var original = new XModel_SQLSchema_UseOriginal.SQLTableForeignKey(table_Name, constraint_Name, stfkList);
             var column_Name = original.COLUMN_NAME.ToUpper();

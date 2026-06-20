@@ -14,7 +14,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLProcedure(List<XModel_SQLSchema_Original.SQLProcedure> spList)
+        public SQLProcedure(List<XModelSQL_Original.SQLProcedure> spList)
         {
             var sp1 = spList[0];
 

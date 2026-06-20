@@ -17,7 +17,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModel_SQLSchema_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLTableIndex(string table_Name, string constraint_Name, List<XModel_SQLSchema_Original.SQLTableIndex> stiList)
+        public SQLTableIndex(string table_Name, string constraint_Name, List<XModelSQL_Original.SQLTableIndex> stiList)
         {
             var sti1 = stiList[0];
 

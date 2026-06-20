@@ -9,7 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 {
     public class SQLTableConstraints
     {
-        public XModel_SQLSchema_Original.SQLTableConstraints Original { get; private set; }
+        public XModelSQL_Original.SQLTableConstraints Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string TYPE_DESC { get; private set; }
@@ -19,7 +19,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 
         // -----------------------------------------------------
 
-        public SQLTableConstraints(XModel_SQLSchema_Original.SQLTableConstraints original)
+        public SQLTableConstraints(XModelSQL_Original.SQLTableConstraints original)
         {
             var type_Desc = original.TYPE_DESC.ToUpper();
             var constraint_Definition = original.CONSTRAINT_DEFINITION.ToUpper();
