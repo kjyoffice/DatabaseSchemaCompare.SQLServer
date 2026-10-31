@@ -211,50 +211,6 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ORDER BY A.TABLE_NAME ASC,
                 A.CONSTRAINT_NAME ASC;
             ";
-            /*
-            // 트리거
-            var tableTriggerList = @"
-                SELECT 
-                B.[NAME] AS TABLE_NAME,
-                A.[NAME] AS TRIGGER_NAME,
-                C.[TEXT] AS TRIGGER_SCHEMA
-                FROM [SYS].[TRIGGERS] AS A
-                INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_ID = B.[OBJECT_ID])
-                INNER JOIN [SYS].[SYSCOMMENTS] AS C ON (A.[OBJECT_ID] = C.ID)
-                WHERE (A.IS_MS_SHIPPED = 0)
-                AND (B.IS_MS_SHIPPED = 0)
-                ORDER BY B.[NAME] ASC,
-                A.[NAME] ASC,
-                C.COLID ASC;
-            ";
-            // 프로시저
-            var procedureList = @"
-                SELECT 
-                A.[NAME] AS ROUTINE_NAME,
-                B.[TEXT] AS ROUTINE_DEFINITION
-                FROM [SYS].[PROCEDURES] AS A
-                INNER JOIN [SYS].[SYSCOMMENTS] AS B ON (A.[OBJECT_ID] = B.ID)
-                WHERE (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[NAME] ASC,
-                B.COLID ASC;
-            ";
-            // 함수
-            var functionList = @"
-                -- FN / SQL_SCALAR_FUNCTION
-                -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
-                -- TF / SQL_TABLE_VALUED_FUNCTION
-                SELECT 
-                A.[NAME] AS FUNCTION_NAME,
-                B.[TEXT] AS FUNCTION_DEFINITION
-                FROM [SYS].[OBJECTS] AS A
-                INNER JOIN [SYS].[SYSCOMMENTS] AS B ON (A.[OBJECT_ID] = B.ID)
-                WHERE (A.[TYPE] IN (N'FN', N'IF', N'TF'))
-                AND (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[TYPE] ASC,
-                A.[NAME] ASC,
-                B.COLID ASC;
-            ";
-            */
             // 트리거
             var tableTriggerList = @"
                 SELECT 
