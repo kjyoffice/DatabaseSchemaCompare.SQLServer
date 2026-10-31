@@ -125,13 +125,13 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 
         public SQLTableColumn(XModelSQL_Original.SQLTableColumn original)
         {
-            var is_Nullable = original.IS_NULLABLE.ToUpper();
-            var data_Type = original.DATA_TYPE.ToUpper();
-            var is_Identity = original.IS_IDENTITY.ToUpper();
+            var is_Nullable = original.IS_NULLABLE;
+            var data_Type = original.DATA_TYPE;
+            var is_Identity = original.IS_IDENTITY;
 
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
-            this.COLUMN_NAME = original.COLUMN_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
+            this.COLUMN_NAME = original.COLUMN_NAME;
             this.IS_NULLABLE = is_Nullable;
             this.DATA_TYPE = data_Type;
             this.MAX_LENGTH = original.MAX_LENGTH;

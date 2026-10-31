@@ -23,13 +23,13 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLTableForeignKey(string table_Name, string constraint_Name, List<XModelSQL_Original.SQLTableForeignKey> stfkList)
         {
             var original = new XModelSQL_UseOriginal.SQLTableForeignKey(table_Name, constraint_Name, stfkList);
-            var column_Name = original.COLUMN_NAME.ToUpper();
-            var reference_Table_Name = original.REFERENCE_TABLE_NAME.ToUpper();
-            var reference_Column_Name = original.REFERENCE_COLUMN_NAME.ToUpper();
+            var column_Name = original.COLUMN_NAME;
+            var reference_Table_Name = original.REFERENCE_TABLE_NAME;
+            var reference_Column_Name = original.REFERENCE_COLUMN_NAME;
 
             this.Original = original;
-            this.TABLE_NAME = table_Name.ToUpper();
-            this.CONSTRAINT_NAME = constraint_Name.ToUpper();
+            this.TABLE_NAME = table_Name;
+            this.CONSTRAINT_NAME = constraint_Name;
             this.COLUMN_NAME = column_Name;
             this.REFERENCE_TABLE_NAME = reference_Table_Name;
             this.REFERENCE_COLUMN_NAME = reference_Column_Name;     

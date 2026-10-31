@@ -24,13 +24,13 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLTableIndex(string table_Name, string constraint_Name, List<XModelSQL_Original.SQLTableIndex> stiList)
         {
             var original = new XModelSQL_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
-            var index_Type = original.INDEX_TYPE.ToUpper();
-            var clustered_Type = original.CLUSTERED_TYPE.ToUpper();
-            var column_Name_And_OrderBy_Type = original.COLUMN_NAME_And_ORDERBY_TYPE.ToUpper();
+            var index_Type = original.INDEX_TYPE;
+            var clustered_Type = original.CLUSTERED_TYPE;
+            var column_Name_And_OrderBy_Type = original.COLUMN_NAME_And_ORDERBY_TYPE;
 
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
-            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
+            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME;
             this.INDEX_TYPE = index_Type;
             this.CLUSTERED_TYPE = clustered_Type;
             this.KEY_ORDINAL = original.KEY_ORDINAL;

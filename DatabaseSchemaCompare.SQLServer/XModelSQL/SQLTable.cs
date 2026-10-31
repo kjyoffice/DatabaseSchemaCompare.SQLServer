@@ -17,7 +17,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLTable(XModelSQL_Original.SQLTable original)
         {
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
         }
     }
 }

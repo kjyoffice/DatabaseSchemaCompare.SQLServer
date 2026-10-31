@@ -20,11 +20,11 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLTableTrigger(string table_Name, string trigger_Name, List<XModelSQL_Original.SQLTableTrigger> sttList)
         {
             var original = new XModelSQL_UseOriginal.SQLTableTrigger(table_Name, trigger_Name, sttList);
-            var trigger_Schema = original.TRIGGER_SCHEMA.ToUpper();
+            var trigger_Schema = original.TRIGGER_SCHEMA;
 
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
-            this.TRIGGER_NAME = original.TRIGGER_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
+            this.TRIGGER_NAME = original.TRIGGER_NAME;
             this.TRIGGER_SCHEMA = trigger_Schema;
             this.CheckSource = XValue.ProcessValue.SHA512Hash(trigger_Schema);
         }

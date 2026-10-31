@@ -21,12 +21,12 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
 
         public SQLTableConstraints(XModelSQL_Original.SQLTableConstraints original)
         {
-            var type_Desc = original.TYPE_DESC.ToUpper();
-            var constraint_Definition = original.CONSTRAINT_DEFINITION.ToUpper();
+            var type_Desc = original.TYPE_DESC;
+            var constraint_Definition = original.CONSTRAINT_DEFINITION;
 
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
-            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
+            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME;
             this.TYPE_DESC = type_Desc;
             this.CONSTRAINT_DEFINITION = constraint_Definition;
             this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(type_Desc, constraint_Definition);
