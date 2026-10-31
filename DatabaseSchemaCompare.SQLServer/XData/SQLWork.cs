@@ -236,10 +236,10 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ORDER BY A.[NAME] ASC;
             ";
             // 함수
+            // FN / SQL_SCALAR_FUNCTION
+            // IF / SQL_INLINE_TABLE_VALUED_FUNCTION
+            // TF / SQL_TABLE_VALUED_FUNCTION
             var functionList = @"
-                -- FN / SQL_SCALAR_FUNCTION
-                -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
-                -- TF / SQL_TABLE_VALUED_FUNCTION
                 SELECT 
                 A.[NAME] AS FUNCTION_NAME,
                 B.[DEFINITION] AS FUNCTION_DEFINITION
