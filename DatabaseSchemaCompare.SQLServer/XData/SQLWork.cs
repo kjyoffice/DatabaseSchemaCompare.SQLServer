@@ -165,6 +165,8 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 D.[NAME] AS TABLE_NAME,
                 A.[NAME] AS CONSTRAINT_NAME,
                 C.[NAME] AS COLUMN_NAME,
+                A.DELETE_REFERENTIAL_ACTION_DESC,
+                A.UPDATE_REFERENTIAL_ACTION_DESC,
                 SCHXF.[NAME] AS REFERENCE_SCHEMANAME,
                 F.[NAME] AS REFERENCE_TABLE_NAME,
                 E.[NAME] AS REFERENCE_COLUMN_NAME
@@ -188,8 +190,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ORDER BY D.[SCHEMA_ID] ASC,
                 D.[NAME] ASC, 
                 A.[NAME] ASC,
-                B.PARENT_COLUMN_ID ASC,
-                B.REFERENCED_COLUMN_ID ASC;
+                B.CONSTRAINT_COLUMN_ID ASC;
             ";
             // 제약조건
             var tableConstraintsList = @"
