@@ -137,7 +137,7 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ) AS INDEX_TYPE,
                 A.[TYPE_DESC] AS CLUSTERED_TYPE,
                 B.KEY_ORDINAL,
-                C.[NAME] AS COLUMN_NAME,						
+                C.[NAME] AS COLUMN_NAME,
                 (
                     CASE
                         WHEN (B.IS_DESCENDING_KEY = 1) THEN N'DESC'
@@ -146,7 +146,9 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 ) AS ORDERBY_TYPE,
                 B.IS_INCLUDED_COLUMN,
                 B.INDEX_COLUMN_ID,
-                A.IS_DISABLED
+                A.IS_DISABLED,
+                A.HAS_FILTER,
+                ISNULL(A.FILTER_DEFINITION, N'') AS FILTER_DEFINITION
                 FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])

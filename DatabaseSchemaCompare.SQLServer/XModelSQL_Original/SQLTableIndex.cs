@@ -27,6 +27,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
             var schemaName = dr["SCHEMANAME"].ToString();
             var tableName = dr["TABLE_NAME"].ToString();
             var isDisabled = Convert.ToBoolean(dr["IS_DISABLED"]);
+            var hasFilter = Convert.ToBoolean(dr["HAS_FILTER"]);
+            var filterDefinition = dr["FILTER_DEFINITION"].ToString();
 
             this.TABLE_NAME = $"{schemaName}.{tableName}";
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
@@ -41,7 +43,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
                 " ",
                 new List<string>()
                 {
-                    $"[IS_DISABLED] {isDisabled}"
+                    $"[IS_DISABLED] {isDisabled}",
+                    ((hasFilter == true) ? $"[FILTER_DEFINITION] {filterDefinition}" : string.Empty)
                 }
             );
         }
