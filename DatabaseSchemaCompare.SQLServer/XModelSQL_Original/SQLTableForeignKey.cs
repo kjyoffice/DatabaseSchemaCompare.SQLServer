@@ -9,9 +9,11 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLTableForeignKey
     {
+        public string SCHEMANAME { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string COLUMN_NAME { get; private set; }
+        public string REFERENCE_SCHEMANAME { get; private set; }
         public string REFERENCE_TABLE_NAME { get; private set; }
         public string REFERENCE_COLUMN_NAME { get; private set; }
 
@@ -19,9 +21,11 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTableForeignKey(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.TABLE_NAME = dr["TABLE_NAME"].ToString();
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
+            this.REFERENCE_SCHEMANAME = dr["REFERENCE_SCHEMANAME"].ToString();
             this.REFERENCE_TABLE_NAME = dr["REFERENCE_TABLE_NAME"].ToString();
             this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString();
         }

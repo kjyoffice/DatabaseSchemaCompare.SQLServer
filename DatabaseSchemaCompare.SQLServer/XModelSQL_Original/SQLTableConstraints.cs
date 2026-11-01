@@ -9,6 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLTableConstraints
     {
+        public string SCHEMANAME { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string TYPE_DESC { get; private set; }
@@ -18,6 +19,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTableConstraints(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.TABLE_NAME = dr["TABLE_NAME"].ToString();
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
             this.TYPE_DESC = dr["TYPE_DESC"].ToString();

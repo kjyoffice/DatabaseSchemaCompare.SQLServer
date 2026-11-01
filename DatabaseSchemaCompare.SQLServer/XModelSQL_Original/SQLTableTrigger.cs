@@ -9,6 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLTableTrigger
     {
+        public string SCHEMANAME { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string TRIGGER_NAME { get; private set; }
         public string TRIGGER_SCHEMA { get; private set; }
@@ -17,6 +18,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTableTrigger(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.TABLE_NAME = dr["TABLE_NAME"].ToString();
             this.TRIGGER_NAME = dr["TRIGGER_NAME"].ToString();
             this.TRIGGER_SCHEMA = dr["TRIGGER_SCHEMA"].ToString();

@@ -9,6 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLFunction
     {
+        public string SCHEMANAME { get; private set; }
         public string FUNCTION_NAME { get; private set; }
         public string FUNCTION_DEFINITION { get; private set; }
 
@@ -16,6 +17,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLFunction(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.FUNCTION_NAME = dr["FUNCTION_NAME"].ToString();
             this.FUNCTION_DEFINITION = dr["FUNCTION_DEFINITION"].ToString();
         }

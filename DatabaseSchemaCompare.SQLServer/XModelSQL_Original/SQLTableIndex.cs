@@ -9,6 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLTableIndex
     {
+        public string SCHEMANAME { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string INDEX_TYPE { get; private set; }
@@ -21,6 +22,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTableIndex(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.TABLE_NAME = dr["TABLE_NAME"].ToString();
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
             this.INDEX_TYPE = dr["INDEX_TYPE"].ToString();

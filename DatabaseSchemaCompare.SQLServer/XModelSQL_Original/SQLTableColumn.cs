@@ -9,6 +9,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLTableColumn
     {
+        public string SCHEMANAME { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string COLUMN_NAME { get; private set; }
         public string IS_NULLABLE { get; private set; }
@@ -22,8 +23,9 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         // -----------------------------------------------------
 
-        public SQLTableColumn(DataRow dr) 
+        public SQLTableColumn(DataRow dr)
         {
+            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
             this.TABLE_NAME = dr["TABLE_NAME"].ToString();
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
             this.IS_NULLABLE = dr["IS_NULLABLE"].ToString();
