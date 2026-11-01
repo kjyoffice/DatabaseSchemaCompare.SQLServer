@@ -126,7 +126,12 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 (
                     CASE 
                         WHEN ((A.IS_PRIMARY_KEY = 1) AND (A.IS_UNIQUE = 1)) THEN N'PRIMARY KEY'
-                        WHEN ((A.IS_PRIMARY_KEY = 0) AND (A.IS_UNIQUE = 1)) THEN N'UNIQUE'
+                        WHEN ((A.IS_PRIMARY_KEY = 0) AND (A.IS_UNIQUE = 1)) THEN (
+                            CASE
+                                WHEN (A.IS_UNIQUE_CONSTRAINT = 1) THEN N'CONSTRAINT UNIQUE'
+                                ELSE N'UNIQUE INDEX'
+                            END
+                        )
                         ELSE N'INDEX'
                     END
                 ) AS INDEX_TYPE,
@@ -140,7 +145,8 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     END
                 ) AS ORDERBY_TYPE,
                 B.IS_INCLUDED_COLUMN,
-                B.INDEX_COLUMN_ID
+                B.INDEX_COLUMN_ID,
+                A.IS_DISABLED
                 FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])

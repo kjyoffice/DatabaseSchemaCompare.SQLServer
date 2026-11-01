@@ -18,6 +18,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
         public string ORDERBY_TYPE { get; private set; }
         public bool IS_INCLUDED_COLUMN { get; private set; }
         public int INDEX_COLUMN_ID { get; private set; }
+        public string OptionalDataX { get; private set; }
 
         // -----------------------------------------------------
 
@@ -25,6 +26,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
         {
             var schemaName = dr["SCHEMANAME"].ToString();
             var tableName = dr["TABLE_NAME"].ToString();
+            var isDisabled = Convert.ToBoolean(dr["IS_DISABLED"]);
 
             this.TABLE_NAME = $"{schemaName}.{tableName}";
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
@@ -35,6 +37,13 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
             this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString();
             this.IS_INCLUDED_COLUMN = Convert.ToBoolean(dr["IS_INCLUDED_COLUMN"]);
             this.INDEX_COLUMN_ID = Convert.ToInt32(dr["INDEX_COLUMN_ID"]);
+            this.OptionalDataX = string.Join(
+                " ",
+                new List<string>()
+                {
+                    $"[IS_DISABLED] {isDisabled}"
+                }
+            );
         }
     }
 }

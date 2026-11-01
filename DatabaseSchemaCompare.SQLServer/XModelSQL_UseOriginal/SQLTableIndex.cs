@@ -15,6 +15,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_UseOriginal
         public int KEY_ORDINAL { get; private set; }
         public string COLUMN_NAME_And_ORDERBY_TYPE { get; private set; }
         public string INCLUDE_COLUMN_NAME { get; private set; }
+        public string OptionalDataX { get; private set; }
 
         // -----------------------------------------------------
 
@@ -35,6 +36,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_UseOriginal
                 ("[INCLUDE] " + string.Join(", ", incSTIList.Select(x => x.COLUMN_NAME))) : 
                 string.Empty
             );
+            this.OptionalDataX = sti1.OptionalDataX;
         }
     }
 }

@@ -39,3 +39,4 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
     }
 }
 
+

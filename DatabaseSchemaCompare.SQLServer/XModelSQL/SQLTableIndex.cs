@@ -36,8 +36,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
             this.CLUSTERED_TYPE = clustered_Type;
             this.KEY_ORDINAL = original.KEY_ORDINAL;
             this.COLUMN_NAME_And_ORDERBY_TYPE = column_Name_And_OrderBy_Type;
-            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(index_Type, clustered_Type, column_Name_And_OrderBy_Type, include_Column_Name);
-            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME_And_ORDERBY_TYPE} / {include_Column_Name}";
+            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(index_Type, clustered_Type, column_Name_And_OrderBy_Type, include_Column_Name, original.OptionalDataX);
+            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME_And_ORDERBY_TYPE} / {include_Column_Name} / {original.OptionalDataX}";
         }
     }
 }
