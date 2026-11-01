@@ -14,7 +14,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_UseOriginal
         public string COLUMN_NAME { get; private set; }
         public string REFERENCE_TABLE_NAME { get; private set; }
         public string REFERENCE_COLUMN_NAME { get; private set; }
-        public string XReferentialActionDesc { get; private set; }
+        public string OptionalDataX { get; private set; }
 
         // -----------------------------------------------------
 
@@ -27,7 +27,7 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_UseOriginal
             this.COLUMN_NAME = string.Join(", ", stfkList.Select(x => x.COLUMN_NAME));
             this.REFERENCE_TABLE_NAME = stfk1.REFERENCE_TABLE_NAME;
             this.REFERENCE_COLUMN_NAME = string.Join(", ", stfkList.Select(x => x.REFERENCE_COLUMN_NAME));
-            this.XReferentialActionDesc = stfk1.X_REFERENTIAL_ACTION_DESC;
+            this.OptionalDataX = stfk1.OptionalDataX;
         }
     }
 }
