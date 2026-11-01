@@ -9,7 +9,6 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 {
     public class SQLView
     {
-        public string SCHEMANAME { get; private set; }
         public string VIEW_NAME { get; private set; }
         public string VIEW_DEFINITION { get; private set; }
 
@@ -17,8 +16,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLView(DataRow dr)
         {
-            this.SCHEMANAME = dr["SCHEMANAME"].ToString();
-            this.VIEW_NAME = dr["VIEW_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var viewName = dr["VIEW_NAME"].ToString();
+
+            this.VIEW_NAME = $"{schemaName}.{viewName}";
             this.VIEW_DEFINITION = dr["VIEW_DEFINITION"].ToString();
         }
     }
