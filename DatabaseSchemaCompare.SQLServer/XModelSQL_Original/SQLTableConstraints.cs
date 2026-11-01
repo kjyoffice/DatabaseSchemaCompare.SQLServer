@@ -18,7 +18,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTableConstraints(DataRow dr)
         {
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var tableName = dr["TABLE_NAME"].ToString();
+
+            this.TABLE_NAME = $"{schemaName}.{tableName}";
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
             this.TYPE_DESC = dr["TYPE_DESC"].ToString();
             this.CONSTRAINT_DEFINITION = dr["CONSTRAINT_DEFINITION"].ToString();

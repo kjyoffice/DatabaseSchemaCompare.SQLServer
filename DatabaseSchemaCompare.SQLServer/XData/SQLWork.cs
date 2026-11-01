@@ -69,14 +69,18 @@ namespace DatabaseSchemaCompare.SQLServer.XData
             // 테이블
             var tableList = @"
                 SELECT
-                [NAME] AS TABLE_NAME
-                FROM [SYS].[TABLES]
-                WHERE (IS_MS_SHIPPED = 0)
-                ORDER BY [NAME] ASC;
+                SCHX.[NAME] AS SCHEMANAME,
+                A.[NAME] AS TABLE_NAME
+                FROM [SYS].[TABLES] AS A
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (A.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
+                WHERE (A.IS_MS_SHIPPED = 0)
+                ORDER BY A.[SCHEMA_ID] ASC,
+                A.[NAME] ASC;
             ";
             // 컬럼
             var tableColumnList = @"
                 SELECT
+                SCHX.[NAME] AS SCHEMANAME,
                 A.[NAME] AS TABLE_NAME,
                 B.[NAME] AS COLUMN_NAME,
                 (
@@ -103,35 +107,48 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     (B.SYSTEM_TYPE_ID = C.SYSTEM_TYPE_ID)
                     AND (B.USER_TYPE_ID = C.USER_TYPE_ID)
                 )
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (A.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 LEFT OUTER JOIN [SYS].[IDENTITY_COLUMNS] AS D ON (
                     (B.[OBJECT_ID] = D.[OBJECT_ID])
                     AND (B.[NAME] = D.[NAME])
                 )
                 WHERE (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[NAME] ASC,
+                ORDER BY A.[SCHEMA_ID] ASC,
+                A.[NAME] ASC,
                 B.COLUMN_ID ASC;
             ";
             // 인덱스
             var tableIndexList = @"
                 SELECT 
+                SCHX.[NAME] AS SCHEMANAME,
                 D.[NAME] AS TABLE_NAME,
                 A.[NAME] AS CONSTRAINT_NAME,
                 (
                     CASE 
                         WHEN ((A.IS_PRIMARY_KEY = 1) AND (A.IS_UNIQUE = 1)) THEN N'PRIMARY KEY'
-                        WHEN ((A.IS_PRIMARY_KEY = 0) AND (A.IS_UNIQUE = 1)) THEN N'UNIQUE'
+                        WHEN ((A.IS_PRIMARY_KEY = 0) AND (A.IS_UNIQUE = 1)) THEN (
+                            CASE
+                                WHEN (A.IS_UNIQUE_CONSTRAINT = 1) THEN N'CONSTRAINT UNIQUE'
+                                ELSE N'UNIQUE INDEX'
+                            END
+                        )
                         ELSE N'INDEX'
                     END
                 ) AS INDEX_TYPE,
                 A.[TYPE_DESC] AS CLUSTERED_TYPE,
                 B.KEY_ORDINAL,
-                C.[NAME] AS COLUMN_NAME,						
+                C.[NAME] AS COLUMN_NAME,
                 (
                     CASE
                         WHEN (B.IS_DESCENDING_KEY = 1) THEN N'DESC'
                         ELSE N'ASC'
                     END
-                ) AS ORDERBY_TYPE
+                ) AS ORDERBY_TYPE,
+                B.IS_INCLUDED_COLUMN,
+                B.INDEX_COLUMN_ID,
+                A.IS_DISABLED,
+                A.HAS_FILTER,
+                ISNULL(A.FILTER_DEFINITION, N'') AS FILTER_DEFINITION
                 FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])
@@ -142,19 +159,28 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     AND (B.COLUMN_ID = C.COLUMN_ID)
                 )
                 INNER JOIN [SYS].[TABLES] AS D ON (A.[OBJECT_ID] = D.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (D.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 WHERE (D.IS_MS_SHIPPED = 0) 
-                ORDER BY D.[NAME] ASC, 
+                ORDER BY D.[SCHEMA_ID] ASC,
+                D.[NAME] ASC, 
                 A.IS_PRIMARY_KEY DESC,
                 A.[NAME] ASC,
                 A.INDEX_ID ASC,
-                B.KEY_ORDINAL ASC;
+                B.KEY_ORDINAL ASC,
+                B.INDEX_COLUMN_ID ASC;
             ";
             // 외래키
             var tableForeignKeyList = @"
                 SELECT 
+                SCHXD.[NAME] AS SCHEMANAME,
                 D.[NAME] AS TABLE_NAME,
                 A.[NAME] AS CONSTRAINT_NAME,
+                A.DELETE_REFERENTIAL_ACTION_DESC,
+                A.UPDATE_REFERENTIAL_ACTION_DESC,
+                A.IS_DISABLED,
+                A.IS_NOT_TRUSTED,
                 C.[NAME] AS COLUMN_NAME,
+                SCHXF.[NAME] AS REFERENCE_SCHEMANAME,
                 F.[NAME] AS REFERENCE_TABLE_NAME,
                 E.[NAME] AS REFERENCE_COLUMN_NAME
                 FROM [SYS].[FOREIGN_KEYS] AS A 
@@ -164,145 +190,121 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                     AND (B.PARENT_COLUMN_ID = C.COLUMN_ID)
                 )
                 INNER JOIN [SYS].[TABLES] AS D ON (A.PARENT_OBJECT_ID = D.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHXD ON (D.[SCHEMA_ID] = SCHXD.[SCHEMA_ID])
                 INNER JOIN [SYS].[COLUMNS] AS E ON (
                     (B.REFERENCED_OBJECT_ID = E.[OBJECT_ID]) 
                     AND (B.REFERENCED_COLUMN_ID = E.COLUMN_ID)
                 )
                 INNER JOIN [SYS].[TABLES] AS F ON (A.REFERENCED_OBJECT_ID = F.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHXF ON (F.[SCHEMA_ID] = SCHXF.[SCHEMA_ID])
                 WHERE (A.IS_MS_SHIPPED = 0)
                 AND (D.IS_MS_SHIPPED = 0)
                 AND (F.IS_MS_SHIPPED = 0)
-                ORDER BY D.[NAME] ASC, 
+                ORDER BY D.[SCHEMA_ID] ASC,
+                D.[NAME] ASC, 
                 A.[NAME] ASC,
-                B.PARENT_COLUMN_ID ASC,
-                B.REFERENCED_COLUMN_ID ASC;
+                B.CONSTRAINT_COLUMN_ID ASC;
             ";
             // 제약조건
             var tableConstraintsList = @"
                 SELECT
-                A.TABLE_NAME AS TABLE_NAME,
-                A.CONSTRAINT_NAME AS CONSTRAINT_NAME,
-                A.[TYPE_DESC] AS [TYPE_DESC],
-                A.CONSTRAINT_DEFINITION AS CONSTRAINT_DEFINITION
+                A.SCHEMANAME,
+                A.TABLE_NAME,
+                A.CONSTRAINT_NAME,
+                A.[TYPE_DESC],
+                A.CONSTRAINT_DEFINITION
                 FROM
                 (
                     -- 기본값
 	                SELECT 
+                    SCHX.[NAME] AS SCHEMANAME,
 	                B.[NAME] AS TABLE_NAME,
 	                A.[NAME] AS CONSTRAINT_NAME,
 	                A.[TYPE_DESC] AS [TYPE_DESC],
 	                A.[DEFINITION] AS CONSTRAINT_DEFINITION
 	                FROM [SYS].[DEFAULT_CONSTRAINTS] AS A
 	                INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_OBJECT_ID = B.[OBJECT_ID])
+                    INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (B.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
 	                WHERE (A.IS_MS_SHIPPED = 0)
 	                AND (B.IS_MS_SHIPPED = 0)
 	                UNION ALL
                     -- 체크
 	                SELECT 
+                    SCHX.[NAME] AS SCHEMANAME,
 	                B.[NAME] AS TABLE_NAME,
 	                A.[NAME] AS CONSTRAINT_NAME,
 	                A.[TYPE_DESC] AS [TYPE_DESC],
 	                A.[DEFINITION] AS CONSTRAINT_DEFINITION
 	                FROM [SYS].[CHECK_CONSTRAINTS] AS A
 	                INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_OBJECT_ID = B.[OBJECT_ID])
+                    INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (B.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
 	                WHERE (A.IS_MS_SHIPPED = 0)
 	                AND (B.IS_MS_SHIPPED = 0)
                 ) AS A
-                ORDER BY A.TABLE_NAME ASC,
+                ORDER BY A.SCHEMANAME ASC,
+                A.TABLE_NAME ASC,
                 A.CONSTRAINT_NAME ASC;
             ";
-            /*
             // 트리거
             var tableTriggerList = @"
                 SELECT 
-                B.[NAME] AS TABLE_NAME,
-                A.[NAME] AS TRIGGER_NAME,
-                C.[TEXT] AS TRIGGER_SCHEMA
-                FROM [SYS].[TRIGGERS] AS A
-                INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_ID = B.[OBJECT_ID])
-                INNER JOIN [SYS].[SYSCOMMENTS] AS C ON (A.[OBJECT_ID] = C.ID)
-                WHERE (A.IS_MS_SHIPPED = 0)
-                AND (B.IS_MS_SHIPPED = 0)
-                ORDER BY B.[NAME] ASC,
-                A.[NAME] ASC,
-                C.COLID ASC;
-            ";
-            // 프로시저
-            var procedureList = @"
-                SELECT 
-                A.[NAME] AS ROUTINE_NAME,
-                B.[TEXT] AS ROUTINE_DEFINITION
-                FROM [SYS].[PROCEDURES] AS A
-                INNER JOIN [SYS].[SYSCOMMENTS] AS B ON (A.[OBJECT_ID] = B.ID)
-                WHERE (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[NAME] ASC,
-                B.COLID ASC;
-            ";
-            // 함수
-            var functionList = @"
-                -- FN / SQL_SCALAR_FUNCTION
-                -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
-                -- TF / SQL_TABLE_VALUED_FUNCTION
-                SELECT 
-                A.[NAME] AS FUNCTION_NAME,
-                B.[TEXT] AS FUNCTION_DEFINITION
-                FROM [SYS].[OBJECTS] AS A
-                INNER JOIN [SYS].[SYSCOMMENTS] AS B ON (A.[OBJECT_ID] = B.ID)
-                WHERE (A.[TYPE] IN (N'FN', N'IF', N'TF'))
-                AND (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[TYPE] ASC,
-                A.[NAME] ASC,
-                B.COLID ASC;
-            ";
-            */
-            // 트리거
-            var tableTriggerList = @"
-                SELECT 
+                SCHX.[NAME] AS SCHEMANAME,
                 B.[NAME] AS TABLE_NAME,
                 A.[NAME] AS TRIGGER_NAME,
                 C.[DEFINITION] AS TRIGGER_SCHEMA
                 FROM [SYS].[TRIGGERS] AS A
                 INNER JOIN [SYS].[TABLES] AS B ON (A.PARENT_ID = B.[OBJECT_ID])
                 INNER JOIN [SYS].[SQL_MODULES] AS C ON (A.[OBJECT_ID] = C.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (B.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 WHERE (A.IS_MS_SHIPPED = 0)
                 AND (B.IS_MS_SHIPPED = 0)
-                ORDER BY B.[NAME] ASC,
+                ORDER BY B.[SCHEMA_ID] ASC,
+                B.[NAME] ASC,
                 A.[NAME] ASC;
             ";
             // 프로시저
             var procedureList = @"
                 SELECT 
+                SCHX.[NAME] AS SCHEMANAME,
                 A.[NAME] AS ROUTINE_NAME,
                 B.[DEFINITION] AS ROUTINE_DEFINITION
                 FROM [SYS].[PROCEDURES] AS A
                 INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (A.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 WHERE (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[NAME] ASC;
+                ORDER BY A.[SCHEMA_ID] ASC,
+                A.[NAME] ASC;
             ";
             // 함수
+            // FN / SQL_SCALAR_FUNCTION
+            // IF / SQL_INLINE_TABLE_VALUED_FUNCTION
+            // TF / SQL_TABLE_VALUED_FUNCTION
             var functionList = @"
-                -- FN / SQL_SCALAR_FUNCTION
-                -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
-                -- TF / SQL_TABLE_VALUED_FUNCTION
                 SELECT 
+                SCHX.[NAME] AS SCHEMANAME,
                 A.[NAME] AS FUNCTION_NAME,
                 B.[DEFINITION] AS FUNCTION_DEFINITION
                 FROM [SYS].[OBJECTS] AS A
                 INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (A.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 WHERE (A.[TYPE] IN (N'FN', N'IF', N'TF'))
                 AND (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[TYPE] ASC,
+                ORDER BY A.[SCHEMA_ID] ASC, 
+                A.[TYPE] ASC,
                 A.[NAME] ASC;
             ";
             // 뷰
             var viewList = @"
                 SELECT 
+                SCHX.[NAME] AS SCHEMANAME,
                 A.[NAME] AS VIEW_NAME,
                 B.[DEFINITION] AS VIEW_DEFINITION
                 FROM [SYS].[VIEWS] AS A
                 INNER JOIN [SYS].[SQL_MODULES] AS B ON (A.[OBJECT_ID] = B.[OBJECT_ID])
+                INNER JOIN [SYS].[SCHEMAS] AS SCHX ON (A.[SCHEMA_ID] = SCHX.[SCHEMA_ID])
                 WHERE (A.IS_MS_SHIPPED = 0)
-                ORDER BY A.[NAME] ASC;
+                ORDER BY A.[SCHEMA_ID] ASC, 
+                A.[NAME] ASC;
             ";
             // 쿼리를 1개로 묶고
             var query = string.Join(

@@ -19,10 +19,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLProcedure(List<XModelSQL_Original.SQLProcedure> spList)
         {
             var original = new XModelSQL_UseOriginal.SQLProcedure(spList);
-            var routine_Definition = original.ROUTINE_DEFINITION.ToUpper();
+            var routine_Definition = original.ROUTINE_DEFINITION;
 
             this.Original = original;
-            this.ROUTINE_NAME = original.ROUTINE_NAME.ToUpper();
+            this.ROUTINE_NAME = original.ROUTINE_NAME;
             this.ROUTINE_DEFINITION = routine_Definition;
             this.CheckSource = XValue.ProcessValue.SHA512Hash(routine_Definition);
         }

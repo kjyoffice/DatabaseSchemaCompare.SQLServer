@@ -19,10 +19,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLView(List<XModelSQL_Original.SQLView> spList)
         {
             var original = new XModelSQL_UseOriginal.SQLView(spList);
-            var view_Definition = original.VIEW_DEFINITION.ToUpper();
+            var view_Definition = original.VIEW_DEFINITION;
 
             this.Original = original;
-            this.VIEW_NAME = original.VIEW_NAME.ToUpper();
+            this.VIEW_NAME = original.VIEW_NAME;
             this.VIEW_DEFINITION = view_Definition;
             this.CheckSource = XValue.ProcessValue.SHA512Hash(view_Definition);
         }

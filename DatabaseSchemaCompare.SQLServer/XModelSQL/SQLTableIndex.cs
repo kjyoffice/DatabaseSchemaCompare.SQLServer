@@ -24,19 +24,20 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLTableIndex(string table_Name, string constraint_Name, List<XModelSQL_Original.SQLTableIndex> stiList)
         {
             var original = new XModelSQL_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
-            var index_Type = original.INDEX_TYPE.ToUpper();
-            var clustered_Type = original.CLUSTERED_TYPE.ToUpper();
-            var column_Name_And_OrderBy_Type = original.COLUMN_NAME_And_ORDERBY_TYPE.ToUpper();
+            var index_Type = original.INDEX_TYPE;
+            var clustered_Type = original.CLUSTERED_TYPE;
+            var column_Name_And_OrderBy_Type = original.COLUMN_NAME_And_ORDERBY_TYPE;
+            var include_Column_Name = original.INCLUDE_COLUMN_NAME;
 
             this.Original = original;
-            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
-            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME.ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME;
+            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME;
             this.INDEX_TYPE = index_Type;
             this.CLUSTERED_TYPE = clustered_Type;
             this.KEY_ORDINAL = original.KEY_ORDINAL;
             this.COLUMN_NAME_And_ORDERBY_TYPE = column_Name_And_OrderBy_Type;
-            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(index_Type, clustered_Type, column_Name_And_OrderBy_Type);
-            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME_And_ORDERBY_TYPE}";
+            this.CheckSourceHash = XValue.ProcessValue.SHA512Hash(index_Type, clustered_Type, column_Name_And_OrderBy_Type, include_Column_Name, original.OptionalDataX);
+            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME_And_ORDERBY_TYPE} / {include_Column_Name} / {original.OptionalDataX}";
         }
     }
 }

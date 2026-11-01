@@ -16,7 +16,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLProcedure(DataRow dr)
         {
-            this.ROUTINE_NAME = dr["ROUTINE_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var routineName = dr["ROUTINE_NAME"].ToString();
+
+            this.ROUTINE_NAME = $"{schemaName}.{routineName}";
             this.ROUTINE_DEFINITION = dr["ROUTINE_DEFINITION"].ToString();
         }
     }

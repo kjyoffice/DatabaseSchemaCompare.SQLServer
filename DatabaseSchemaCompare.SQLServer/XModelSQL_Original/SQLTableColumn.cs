@@ -22,9 +22,12 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         // -----------------------------------------------------
 
-        public SQLTableColumn(DataRow dr) 
+        public SQLTableColumn(DataRow dr)
         {
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var tableName = dr["TABLE_NAME"].ToString();
+
+            this.TABLE_NAME = $"{schemaName}.{tableName}";
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
             this.IS_NULLABLE = dr["IS_NULLABLE"].ToString();
             this.DATA_TYPE = dr["DATA_TYPE"].ToString();

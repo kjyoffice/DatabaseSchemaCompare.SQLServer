@@ -16,7 +16,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLFunction(DataRow dr)
         {
-            this.FUNCTION_NAME = dr["FUNCTION_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var functionName = dr["FUNCTION_NAME"].ToString();
+
+            this.FUNCTION_NAME = $"{schemaName}.{functionName}";
             this.FUNCTION_DEFINITION = dr["FUNCTION_DEFINITION"].ToString();
         }
     }

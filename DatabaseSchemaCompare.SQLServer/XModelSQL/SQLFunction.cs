@@ -19,10 +19,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL
         public SQLFunction(List<XModelSQL_Original.SQLFunction> sfList)
         {
             var original = new XModelSQL_UseOriginal.SQLFunction(sfList);
-            var function_Definition = original.FUNCTION_DEFINITION.ToUpper();
+            var function_Definition = original.FUNCTION_DEFINITION;
 
             this.Original = original;
-            this.FUNCTION_NAME = original.FUNCTION_NAME.ToUpper();
+            this.FUNCTION_NAME = original.FUNCTION_NAME;
             this.FUNCTION_DEFINITION = function_Definition;
             this.CheckSource = XValue.ProcessValue.SHA512Hash(function_Definition);
         }

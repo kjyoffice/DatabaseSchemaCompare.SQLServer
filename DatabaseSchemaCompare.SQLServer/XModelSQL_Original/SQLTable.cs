@@ -15,7 +15,10 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
 
         public SQLTable(DataRow dr)
         {
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString();
+            var schemaName = dr["SCHEMANAME"].ToString();
+            var tableName = dr["TABLE_NAME"].ToString();
+
+            this.TABLE_NAME = $"{schemaName}.{tableName}";
         }
     }
 }
