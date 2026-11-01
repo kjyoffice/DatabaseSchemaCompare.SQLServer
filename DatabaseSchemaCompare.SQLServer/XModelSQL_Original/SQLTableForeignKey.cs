@@ -11,9 +11,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
     {
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
+        public string X_REFERENTIAL_ACTION_DESC { get; private set; }
         public string COLUMN_NAME { get; private set; }
-        public string DELETE_REFERENTIAL_ACTION_DESC { get; private set; }
-        public string UPDATE_REFERENTIAL_ACTION_DESC { get; private set; }
         public string REFERENCE_TABLE_NAME { get; private set; }
         public string REFERENCE_COLUMN_NAME { get; private set; }
 
@@ -23,14 +22,15 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
         {
             var schemaName = dr["SCHEMANAME"].ToString();
             var tableName = dr["TABLE_NAME"].ToString();
+            var deleteReferentialActionDesc = dr["DELETE_REFERENTIAL_ACTION_DESC"].ToString();
+            var updateReferentialActionDesc = dr["UPDATE_REFERENTIAL_ACTION_DESC"].ToString();
             var refSchemaName = dr["REFERENCE_SCHEMANAME"].ToString();
             var refTableName = dr["REFERENCE_TABLE_NAME"].ToString();
 
             this.TABLE_NAME = $"{schemaName}.{tableName}";
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
+            this.X_REFERENTIAL_ACTION_DESC = $"{deleteReferentialActionDesc} {updateReferentialActionDesc}";
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
-            this.DELETE_REFERENTIAL_ACTION_DESC = dr["DELETE_REFERENTIAL_ACTION_DESC"].ToString();
-            this.UPDATE_REFERENTIAL_ACTION_DESC = dr["UPDATE_REFERENTIAL_ACTION_DESC"].ToString();
             this.REFERENCE_TABLE_NAME = $"{refSchemaName}.{refTableName}";
             this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString();
         }
