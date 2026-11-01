@@ -16,6 +16,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
         public int KEY_ORDINAL { get; private set; }
         public string COLUMN_NAME { get; private set; }
         public string ORDERBY_TYPE { get; private set; }
+        public bool IS_INCLUDED_COLUMN { get; private set; }
+        public int INDEX_COLUMN_ID { get; private set; }
 
         // -----------------------------------------------------
 
@@ -31,6 +33,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
             this.KEY_ORDINAL = Convert.ToInt32(dr["KEY_ORDINAL"]);
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
             this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString();
+            this.IS_INCLUDED_COLUMN = Convert.ToBoolean(dr["IS_INCLUDED_COLUMN"]);
+            this.INDEX_COLUMN_ID = Convert.ToInt32(dr["INDEX_COLUMN_ID"]);
         }
     }
 }

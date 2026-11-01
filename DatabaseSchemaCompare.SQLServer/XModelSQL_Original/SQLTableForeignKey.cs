@@ -24,8 +24,8 @@ namespace DatabaseSchemaCompare.SQLServer.XModelSQL_Original
             var tableName = dr["TABLE_NAME"].ToString();
             var deleteReferentialActionDesc = dr["DELETE_REFERENTIAL_ACTION_DESC"].ToString();
             var updateReferentialActionDesc = dr["UPDATE_REFERENTIAL_ACTION_DESC"].ToString();
-            var isDisabled = dr["IS_DISABLED"].ToString();
-            var isNotTrusted = dr["IS_NOT_TRUSTED"].ToString();
+            var isDisabled = Convert.ToBoolean(dr["IS_DISABLED"]);
+            var isNotTrusted = Convert.ToBoolean(dr["IS_NOT_TRUSTED"]);
             var refSchemaName = dr["REFERENCE_SCHEMANAME"].ToString();
             var refTableName = dr["REFERENCE_TABLE_NAME"].ToString();
 

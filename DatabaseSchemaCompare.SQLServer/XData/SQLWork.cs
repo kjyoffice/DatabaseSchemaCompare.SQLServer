@@ -138,7 +138,9 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                         WHEN (B.IS_DESCENDING_KEY = 1) THEN N'DESC'
                         ELSE N'ASC'
                     END
-                ) AS ORDERBY_TYPE
+                ) AS ORDERBY_TYPE,
+                B.IS_INCLUDED_COLUMN,
+                B.INDEX_COLUMN_ID
                 FROM [SYS].[INDEXES] AS A 
                 INNER JOIN [SYS].[INDEX_COLUMNS] AS B ON (
                     (A.[OBJECT_ID] = B.[OBJECT_ID])
@@ -156,7 +158,8 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 A.IS_PRIMARY_KEY DESC,
                 A.[NAME] ASC,
                 A.INDEX_ID ASC,
-                B.KEY_ORDINAL ASC;
+                B.KEY_ORDINAL ASC,
+                B.INDEX_COLUMN_ID ASC;
             ";
             // 외래키
             var tableForeignKeyList = @"
