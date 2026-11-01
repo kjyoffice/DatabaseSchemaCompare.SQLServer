@@ -164,9 +164,9 @@ namespace DatabaseSchemaCompare.SQLServer.XData
                 SCHXD.[NAME] AS SCHEMANAME,
                 D.[NAME] AS TABLE_NAME,
                 A.[NAME] AS CONSTRAINT_NAME,
-                C.[NAME] AS COLUMN_NAME,
                 A.DELETE_REFERENTIAL_ACTION_DESC,
                 A.UPDATE_REFERENTIAL_ACTION_DESC,
+                C.[NAME] AS COLUMN_NAME,
                 SCHXF.[NAME] AS REFERENCE_SCHEMANAME,
                 F.[NAME] AS REFERENCE_TABLE_NAME,
                 E.[NAME] AS REFERENCE_COLUMN_NAME
