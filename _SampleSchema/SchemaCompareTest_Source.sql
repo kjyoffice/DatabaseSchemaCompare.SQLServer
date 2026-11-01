@@ -69,30 +69,30 @@ GO
 CREATE INDEX IDX_TestTable1_Sub1__ColumnAnB ON TestTable1_Sub1(ColumnA, ColumnB);
 GO
 
-CREATE VIEW VIEW_TestTable1 AS (
-	SELECT 
-	ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
-	A.TTPK1,
-	A.TTPK2,
-	B.OpenIndexNo
-	FROM TestTable1 AS A
-	INNER JOIN TestTable1_Sub1 AS B ON (A.TTPK1 = B.TTPK1) AND (A.TTPK2 = B.TTPK2) AND (B.IsDelete = 'FALSE')
-	WHERE (A.TTPK1 IN ('HELLO', 'WORLD'))
-	AND (A.IsDelete = 'FALSE')
-);
+CREATE VIEW VIEW_TestTable1 
+AS
+SELECT 
+ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
+A.TTPK1,
+A.TTPK2,
+B.OpenIndexNo
+FROM TestTable1 AS A
+INNER JOIN TestTable1_Sub1 AS B ON (A.TTPK1 = B.TTPK1) AND (A.TTPK2 = B.TTPK2) AND (B.IsDelete = 'FALSE')
+WHERE (A.TTPK1 IN ('HELLO', 'WORLD'))
+AND (A.IsDelete = 'FALSE');
 GO
 
-CREATE VIEW VIEW_TestTable2 AS (
-	SELECT 
-	ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
-	A.TTPK1,
-	A.TTPK2,
-	B.OpenIndexNo
-	FROM TestTable1 AS A
-	INNER JOIN TestTable1_Sub1 AS B ON (A.TTPK1 = B.TTPK1) AND (A.TTPK2 = B.TTPK2) AND (B.IsDelete = 'FALSE')
-	WHERE (A.TTPK1 IN ('HELLO', 'WORLD'))
-	AND (A.IsDelete = 'FALSE')
-);
+CREATE VIEW VIEW_TestTable2 
+AS
+SELECT 
+ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
+A.TTPK1,
+A.TTPK2,
+B.OpenIndexNo
+FROM TestTable1 AS A
+INNER JOIN TestTable1_Sub1 AS B ON (A.TTPK1 = B.TTPK1) AND (A.TTPK2 = B.TTPK2) AND (B.IsDelete = 'FALSE')
+WHERE (A.TTPK1 IN ('HELLO', 'WORLD'))
+AND (A.IsDelete = 'FALSE');
 GO
 
 CREATE TABLE TestTable2(
@@ -216,173 +216,5 @@ BEGIN
 	SELECT ('Hello ' + UPPER(@UserName) + ' - ' + CONVERT(VARCHAR(19), GETDATE(), 121)) AS HelloMessage;
 END;
 GO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
