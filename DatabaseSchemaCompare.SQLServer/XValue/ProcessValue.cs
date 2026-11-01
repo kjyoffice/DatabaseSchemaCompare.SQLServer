@@ -47,9 +47,8 @@ namespace DatabaseSchemaCompare.SQLServer.XValue
 
             using (var hash = SHA512.Create())
             {
-                var buffer = Encoding.UTF8.GetBytes(
-                    string.Join(string.Empty, source.Select(x => x.ToString()))
-                );
+                var hashSource = string.Join("|", source.Select(x => x.ToString()));
+                var buffer = Encoding.UTF8.GetBytes(hashSource);
                 var hashing = BitConverter.ToString(hash.ComputeHash(buffer));
                 result = Regex.Replace(hashing, "[^0-9A-Za-z]", string.Empty, RegexOptions.IgnoreCase).Trim().ToLower();
                 hash.Clear();
