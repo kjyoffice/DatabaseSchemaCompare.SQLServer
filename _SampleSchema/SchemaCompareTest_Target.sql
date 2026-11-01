@@ -66,7 +66,7 @@ CREATE TABLE TestTable1_Sub1(
 );
 GO
 
-CREATE INDEX IDX_TestTable1_Sub1__ColumnA ON TestTable1_Sub1(ColumnA);
+CREATE INDEX IDX_TestTable1_Sub1__ColumnA ON TestTable1_Sub1(ColumnA) INCLUDE (ColumnB);
 GO
 
 -- 정렬변경
